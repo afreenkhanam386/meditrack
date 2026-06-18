@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>{{ equip.equipment_name }} — Maintenance History</h1>
+<p><strong>Serial:</strong> {{ equip.serial_number }} &nbsp;|&nbsp;
+   <strong>Department:</strong> {{ equip.department }} &nbsp;|&nbsp;
+   <strong>Status:</strong> {{ equip.status }}</p>
+
+<a href="{{ url_for('add_log', eid=equip.equipment_id) }}" class="btn">+ Add Log Entry</a>
+
+{% if logs %}
+<table>
+  <thead>
+    <tr><th>Date</th><th>Technician</th><th>Issue</th><th>Resolution</th><th>Next Due</th></tr>
+  </thead>
+  <tbody>
+    {% for log in logs %}
+    <tr>
+      <td>{{ log.maintenance_date }}</td>
+      <td>{{ log.technician_name }}</td>
+      <td>{{ log.issue_reported }}</td>
+      <td>{{ log.resolution_notes }}</td>
+      <td>{{ log.next_due_date }}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% else %}
+<p>No maintenance logs yet.</p>
+{% endif %}
+{% endblock %}

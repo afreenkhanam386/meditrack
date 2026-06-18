@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>Dashboard</h1>
+
+<div class="cards">
+  <div class="card">
+    <h2>{{ total }}</h2>
+    <p>Total Equipment</p>
+  </div>
+  {% for row in by_status %}
+  <div class="card">
+    <h2>{{ row.count }}</h2>
+    <p>{{ row.status }}</p>
+  </div>
+  {% endfor %}
+</div>
+
+<h2>⚠️ Overdue Maintenance</h2>
+{% if overdue %}
+<table>
+  <thead>
+    <tr><th>Name</th><th>Serial</th><th>Department</th><th>Due Date</th></tr>
+  </thead>
+  <tbody>
+    {% for item in overdue %}
+    <tr class="overdue-row">
+      <td>{{ item.equipment_name }}</td>
+      <td>{{ item.serial_number }}</td>
+      <td>{{ item.department }}</td>
+      <td>{{ item.next_due_date }}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% else %}
+<p>No overdue items. ✅</p>
+{% endif %}
+{% endblock %}

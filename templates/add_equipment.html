@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>Add Equipment</h1>
+<form method="post" class="form-card">
+  <label>Equipment Name
+    <input type="text" name="equipment_name" required>
+  </label>
+  <label>Serial Number
+    <input type="text" name="serial_number" required>
+  </label>
+  <label>Department
+    <input type="text" name="department" placeholder="ICU, Emergency, Pediatrics…" required>
+  </label>
+  <label>Purchase Date
+    <input type="date" name="purchase_date" required>
+  </label>
+  <label>Status
+    <select name="status">
+      <option>Active</option>
+      <option>Under Maintenance</option>
+      <option>Decommissioned</option>
+    </select>
+  </label>
+  <button type="submit">Save Equipment</button>
+</form>
+{% endblock %}

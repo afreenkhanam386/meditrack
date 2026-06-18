@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>Equipment</h1>
+
+<form method="get" class="filter-form">
+  <select name="department">
+    <option value="">All Departments</option>
+    {% for d in departments %}
+    <option value="{{ d }}" {% if d == selected_dept %}selected{% endif %}>{{ d }}</option>
+    {% endfor %}
+  </select>
+  <select name="status">
+    <option value="">All Statuses</option>
+    <option value="Active" {% if selected_status == 'Active' %}selected{% endif %}>Active</option>
+    <option value="Under Maintenance" {% if selected_status == 'Under Maintenance' %}selected{% endif %}>Under Maintenance</option>
+    <option value="Decommissioned" {% if selected_status == 'Decommissioned' %}selected{% endif %}>Decommissioned</option>
+  </select>
+  <button type="submit">Filter</button>
+</form>
+
+<table>
+  <thead>
+    <tr><th>Name</th><th>Serial</th><th>Department</th><th>Purchase Date</th><th>Status</th><th>Actions</th></tr>
+  </thead>
+  <tbody>
+    {% for e in equipment %}
+    <tr>
+      <td>{{ e.equipment_name }}</td>
+      <td>{{ e.serial_number }}</td>
+      <td>{{ e.department }}</td>
+      <td>{{ e.purchase_date }}</td>
+      <td>{{ e.status }}</td>
+      <td>
+        <a href="{{ url_for('maintenance_history', eid=e.equipment_id) }}">History</a> |
+        <a href="{{ url_for('add_log', eid=e.equipment_id) }}">Add Log</a>
+        <form method="post" action="{{ url_for('update_status', eid=e.equipment_id) }}" style="display:inline">
+          <select name="status">
+            <option>Active</option>
+            <option>Under Maintenance</option>
+            <option>Decommissioned</option>
+          </select>
+          <button type="submit">Update</button>
+        </form>
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock %}

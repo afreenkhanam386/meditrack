@@ -1,0 +1,17 @@
+[Unit]
+Description=Gunicorn instance to serve MediTrack
+After=network.target
+
+[Service]
+User=ubuntu
+Group=www-data
+WorkingDirectory=/home/ubuntu/meditrack
+EnvironmentFile=/home/ubuntu/meditrack/.env
+ExecStart=/home/ubuntu/meditrack/venv/bin/gunicorn \
+          --workers 3 \
+          --bind unix:/home/ubuntu/meditrack/meditrack.sock \
+          app:app
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
